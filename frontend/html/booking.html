@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wajebaat Slot Booking</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <!-- Your custom CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="main-booking">
+        <!-- start of container-booking -->
+        <div class="container-booking">
+            <div class="heading-confirmation text-center">
+                Book Slot Pass for Wajebaat Takhmin
+            </div>
+            <!-- start of userdetails -->
+             <br>
+            <div class="userdetails">
+                <div class="row align-items-start">
+                    <div class="col">
+                        <label for="Sabilno">Sabil No.:</label>
+                        <span id="Sabilno">QS227</span>
+                    </div>
+                    <div class="col">
+                        <label for="itsno">HOF ITS:</label>
+                        <span id="itsno">50445540</span>
+                    </div>
+                </div>
+                <br>
+                <div class="row align-items-start">
+                    <div class="col">
+                        <label for="username">Name:</label>
+                        <span id="username">Abbas bhai Huzefa bhai Challawala</span>
+                    </div>
+                </div>
+            </div>
+            <!-- end of userdetails -->
+             <br>
+             <hr>
+             <div class="userdue"><!-- start of userdue -->
+                <div class="text-center">
+                    <p>1445 Dues</p>
+                </div>
+                <div class="row align-items-start">
+                    <div class="col">
+                        <label for="Sabilno">FMB Due Amount:</label>
+                        <span id="Sabilno">40,000</span>
+                    </div>
+                    <div class="col">
+                        <label for="Sabilno">Sabil Due Amount:</label>
+                        <span id="Sabilno">40,000</span>
+                    </div>
+                </div>
+                <br>
+                <div class="text-center">
+                    <p>Note: If you recently paid the Sabil / FMB dues then please Ignore This</p>
+                </div>
+             </div><!-- end of userdue -->
+             <br>
+             <hr>
+             <br>
+             <div class="selectslot"><!-- start of selectslot -->
+                <h4>Select Slot For Wajebaat Takhmin</h4>
+                <br>
+                <div class="dateselect">
+                    <select class="form-select" id="date" onchange="updateTimeSlots()" aria-label="Select Your Date">
+                        <option value="" disabled selected>Select a date</option>
+                        <option value="2025-03-05">5 March 2025</option>
+                        <option value="2025-03-06">6 March 2025</option>
+                        <option value="2025-03-07">7 March 2025</option>
+                        <option value="2025-03-08">8 March 2025</option>
+                        <option value="2025-03-09">9 March 2025</option>
+                        <option value="2025-03-10">10 March 2025</option>
+                    </select>
+                </div>
+                <br>
+                <div class="timeselect">
+                    <select class="form-select" id="time" aria-label="Select Your Slot Time">
+                        <option value="" disabled selected>Select a time slot</option>
+                    </select>
+                </div>
+             </div><!-- end of selectslot -->
+             <br>
+             <div class="text-center">
+                <button type="submit" id="" class="btn" onclick="location.href='confirmation.html'">Submit Your Slot</button>
+             </div>
+        </div>
+        <!-- end of container-booking -->
+    </div>
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="../js/bootstrap.bundle.min.js"></script>
+    <script src="../js/js.js"></script>
+</body>
+</html>

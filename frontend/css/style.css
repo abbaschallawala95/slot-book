@@ -1,0 +1,307 @@
+body{
+    background-color: #61a0b1;
+}
+
+/* index page css */
+.main{
+    padding-top: 120px;
+}
+
+.heading{
+text-align: center;
+font-size: 35px;
+color: #ffffff;
+}
+
+.container{
+    background-color: #ffffff;
+    padding: 20px;
+    margin-top: 20px;
+    width: 85%;
+    height: 300px;
+    border-radius: 20px;
+}
+
+.container button{
+    background-color: #164954;
+    color: whitesmoke;
+}
+
+.container button:hover{
+    background-color: #bfe7ef;
+    color: #164954;
+    border-bottom: solid 4px #164954;
+}
+
+/* instrcutions page css */
+.main-instructions{
+    padding-top: 100px;
+}
+
+.heading-instructions{
+    text-align: center;
+    font-size: 35px;
+    color: #ffffff;
+    }
+
+.container-instructions{
+    background-color: #ffffff;
+    padding: 20px;
+    margin-top: 10px;
+    width: 85%;
+    height: 590px;
+    border-radius: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    overflow-y: auto;
+}
+
+.container-instructions button{
+    background-color: #164954;
+    color: whitesmoke;
+}
+
+.container-instructions button:hover{
+    background-color: #bfe7ef;
+    color: #164954;
+    border-bottom: solid 4px #164954;
+}
+.language-buttons {
+    text-align: center;
+    /* margin-bottom: 15px; */
+}
+
+.language-buttons button {
+    margin: 0 10px;
+}
+
+.btn-primary.active {
+    background-color: #164954;
+    border-color: #164954;
+}
+
+.btn-secondary {
+    background-color: #ffffff !important;
+    border-color: #164954 !important;
+    color: #164954 !important
+}
+
+#nextButton {
+    background-color: #bfe7ef;
+    color: #164954;
+    border: none;
+    padding: 10px 20px;
+    cursor: not-allowed;
+}
+#nextButton.active {
+    background-color: #164954;
+    color: whitesmoke;
+    cursor: pointer;    
+}
+
+#nextButton.active:hover {
+    background-color: #bfe7ef;
+    color: #164954;
+    border-bottom: solid 4px #164954;
+    cursor: pointer;    
+}
+
+.checkbox-container input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none; /* For Safari */
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+.checkbox-container input[type="checkbox"]:checked {
+    background-color: #164954; /* Green background when checked */
+    border-color: #164954; /* Border color when checked */
+}
+.checkbox-container input[type="checkbox"]:checked::after {
+    content: '\27A5'; /* Checkmark character */
+    display: block;
+    color: white;
+    font-size: 14px;
+    text-align: center;
+    line-height: 20px;
+}
+
+/* booking page css */
+.container-booking{
+    background-color: #ffffff;
+    padding: 20px;
+    margin-top: 30px;
+    width: 90%;
+    height: 850px;
+    border-radius: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    overflow-y: auto;
+}
+.container-booking button{
+    background-color: #164954;
+    color: whitesmoke;
+}
+
+.container-booking button:hover{
+    background-color: #bfe7ef;
+    color: #164954;
+    border-bottom: solid 4px #164954;
+}
+
+.container-booking .col{
+    font-size: 17px;
+}
+
+.userdetails label{
+    font-weight: bold;
+}
+
+.userdue p{
+    font-weight: bold;
+    color: red;
+    font-size: 15px;
+}
+
+.userdue label{
+    font-weight: bold;
+}
+
+.userdue span{
+    font-weight: bold;
+    color: red;
+}
+
+select {
+    /* margin-bottom: 20px; */
+    /* padding: 10px; */
+    /* font-size: 16px; */
+    border: 2px solid #164954 !important;
+    border-radius: 5px;
+    background-color: #164954;
+    color: #164954 !important;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+select:focus {
+    border-color: #164954 !important;
+    box-shadow: 0 0 5px #164954 !important;
+}
+select option {
+    padding: 10px;
+    background-color: #d2eded;
+}
+
+/* confirmation page css */
+.container-confirmation{
+    background-color: #ffffff;
+    padding: 20px;
+    margin-top: 30px;
+    width: 90%;
+    height: 850px;
+    border-radius: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    overflow-y: auto;
+}
+.container-confirmation button{
+    background-color: #164954;
+    color: whitesmoke;
+}
+
+.container-confirmation button:hover{
+    background-color: #bfe7ef;
+    color: #164954;
+    border-bottom: solid 4px #164954;
+}
+
+.container-confirmation .col{
+    font-size: 17px;
+}
+
+.userdetails-confirmation label{
+    font-weight: bold;
+}
+
+.selectslot-confirmation h4{
+    color: green;
+}
+
+.selectslot-confirmation span{
+    color: green;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+
+.userdue-confirmation p{
+    font-weight: bold;
+    color: red;
+    font-size: 10 px;
+}
+
+.userdue-confirmation label{
+    font-weight: bold;
+}
+
+.userdue-confirmation span{
+    font-weight: bold;
+    color: red;
+}
+
+.heading-confirmation{
+    font-weight: bolder;
+    font-size: 20px;
+    color:#b8802a;
+}
+
+.logout a{
+    color: #b8802a;
+}
+
+.logout a:hover{
+    color: #164954;
+}
+
+
+/* cancel page css */
+.container-cancel{
+    background-color: #ffffff;
+    padding: 20px;
+    margin-top: 30px;
+    width: 90%;
+    height: 850px;
+    border-radius: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    overflow-y: auto;
+}
+.container-cancel button{
+    background-color: #164954;
+    color: whitesmoke;
+}
+
+.container-cancel button:hover{
+    background-color: #bfe7ef;
+    color: #164954;
+    border-bottom: solid 4px #164954;
+}
+
+.slotcancel{
+    color: red;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.cancelreason label{
+    font-weight: bold;
+}
+
+.cancelreason textarea{
+    border-radius: 10px;
+    border-color: #164954;
+}
