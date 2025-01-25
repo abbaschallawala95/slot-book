@@ -1,0 +1,8 @@
+{
+    "src": [
+        "src",
+        "tests"
+    ],
+    "sortImportsBy": "name",
+    "psr12": true
+}
