@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Luxury Watches</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/TextPlugin.min.js"></script>
+  </head>
+  <body>
+    <!-- ... existing code ... -->
+    <nav class="navbar">
+      <div class="navbar-container">
+        <a href="#" class="navbar-logo">MySite</a>
+        <ul class="navbar-menu">
+          <li><a href="#">Home</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Services</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+        <div class="navbar-toggle" id="mobile-menu">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </div>
+      </div>
+    </nav>
+    <!-- ... existing code ... -->
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-content">
+        <h1 class="hero-title">Timeless Elegance</h1>
+        <p class="hero-subtitle">Discover the finest luxury watches</p>
+        <div class="watch-carousel">
+          <img src="watch1.png" alt="Watch 1" class="carousel-item" />
+          <img src="watch2.png" alt="Watch 2" class="carousel-item" />
+          <img src="watch3.png" alt="Watch 3" class="carousel-item" />
+        </div>
+      </div>
+    </section>
+
+    <!-- Popular Watches Section -->
+    <section class="popular-watches">
+      <h2 class="section-title">Most Popular Watches</h2>
+      <div class="watches-grid">
+        <div class="watch-card">
+          <img src="watch4.png" alt="Watch 4" />
+          <h3>Classic Chrono</h3>
+          <p>$1,200</p>
+        </div>
+        <div class="watch-card">
+          <img src="watch5.png" alt="Watch 5" />
+          <h3>Modern Elegance</h3>
+          <p>$1,500</p>
+        </div>
+        <div class="watch-card">
+          <img src="watch6.png" alt="Watch 6" />
+          <h3>Luxury Masterpiece</h3>
+          <p>$2,000</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about">
+      <h2 class="section-title">Craftsmanship Redefined</h2>
+      <p class="about-text">
+        Our watches are crafted with precision and passion, blending timeless
+        design with modern technology.
+      </p>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <p>&copy; 2023 Luxury Watches. All rights reserved.</p>
+    </footer>
+
+    <script>
+      // Hero Section Animations
+      gsap.from(".hero-title", {
+        duration: 1,
+        y: -50,
+        opacity: 0,
+        ease: "power3.out",
+      });
+
+      gsap.from(".hero-subtitle", {
+        duration: 1,
+        y: 50,
+        opacity: 0,
+        delay: 0.5,
+        ease: "power3.out",
+      });
+
+      gsap.from(".carousel-item", {
+        duration: 1,
+        y: 50,
+        opacity: 0,
+        stagger: 0.3,
+        delay: 1,
+        ease: "power3.out",
+      });
+
+      // Popular Watches Section Animations
+      gsap.from(".watch-card", {
+        scrollTrigger: {
+          trigger: ".popular-watches",
+          start: "top 80%",
+        },
+        duration: 1,
+        y: 50,
+        opacity: 0,
+        stagger: 0.3,
+        ease: "power3.out",
+      });
+
+      // About Section Animations
+      gsap.from(".about-text", {
+        scrollTrigger: {
+          trigger: ".about",
+          start: "top 80%",
+        },
+        duration: 1,
+        y: 50,
+        opacity: 0,
+        ease: "power3.out",
+      });
+      // ... existing code ...
+      const mobileMenu = document.getElementById("mobile-menu");
+      const navbarMenu = document.querySelector(".navbar-menu");
+
+      mobileMenu.addEventListener("click", () => {
+        navbarMenu.classList.toggle("active");
+      });
+      // ... existing code ...
+    </script>
+  </body>
+  <style>
+    /* General Styles */
+    body {
+      font-family: "Arial", sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f4f4f4;
+      color: #333;
+    }
+
+    /* Hero Section */
+    .hero {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #1e1e1e, #3a3a3a);
+      color: #fff;
+      overflow: hidden;
+    }
+
+    .hero-content {
+      text-align: center;
+    }
+    /* ... existing code ... */
+    .navbar {
+      background-color: #333;
+      padding: 1rem 2rem;
+    }
+
+    .navbar-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .navbar-logo {
+      color: #fff;
+      text-decoration: none;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .navbar-menu {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .navbar-menu li {
+      margin-left: 2rem;
+    }
+
+    .navbar-menu a {
+      color: #fff;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .navbar-menu a:hover {
+      color: #f0f0f0;
+    }
+
+    .navbar-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .bar {
+      height: 3px;
+      width: 25px;
+      background-color: #fff;
+      margin: 3px 0;
+    }
+
+    @media (max-width: 768px) {
+      .navbar-menu {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        text-align: center;
+      }
+
+      .navbar-menu.active {
+        display: flex;
+      }
+
+      .navbar-toggle {
+        display: flex;
+      }
+    }
+    /* ... existing code ... */
+    .hero-title {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .watch-carousel {
+      display: flex;
+      gap: 2rem;
+      justify-content: center;
+    }
+
+    .carousel-item {
+      width: 200px;
+      height: auto;
+      opacity: 0;
+      transform: translateY(50px);
+    }
+
+    /* Popular Watches Section */
+    .popular-watches {
+      padding: 4rem 2rem;
+      text-align: center;
+      background: #fff;
+    }
+
+    .section-title {
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .watches-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+
+    .watch-card {
+      background: #fff;
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transform: translateY(50px);
+      opacity: 0;
+    }
+
+    .watch-card img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+    }
+
+    /* About Section */
+    .about {
+      padding: 4rem 2rem;
+      text-align: center;
+      background: #1e1e1e;
+      color: #fff;
+    }
+
+    .about-text {
+      font-size: 1.2rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background: #333;
+      color: #fff;
+    }
+  </style>
+</html>

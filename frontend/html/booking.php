@@ -10,21 +10,46 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
-
 <?php
-
-
+session_start();
 include('connection.php');
 
-
 $query = "SELECT `slot_date` FROM `slots` GROUP BY `slot_date` ORDER BY `slot_date` ASC";
-$dateQuery = mysqli_query($con,$query);
+$dateQuery = mysqli_query($con, $query);
+$firstDate = '';
 
+$slotsQuery = "SELECT `slot_date`, `slot_time`, `id` FROM `slots`";
+$slotsResult = mysqli_query($con, $slotsQuery);
+$timeSlots = [];
+while ($row = mysqli_fetch_assoc($slotsResult)) {
+    $timeSlots[] = $row;
+}
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $selectedDate = mysqli_real_escape_string($con, $_POST['date']);
+    $selectedTime = mysqli_real_escape_string($con, $_POST['time']);
+    $userID = $_SESSION['userid'];
 
+    $slotID = null;
+    foreach ($timeSlots as $slot) {
+        if ($slot['slot_date'] === $selectedDate && $slot['slot_time'] === $selectedTime) {
+            $slotID = $slot['id'];
+            break;
+        }
+    }
 
+    if ($slotID) {
+        $insertQuery = "INSERT INTO booking_details (book_id, date, time, userID) VALUES ('$slotID', '$selectedDate', '$selectedTime', '$userID')";
+        if (mysqli_query($con, $insertQuery)) {
+            echo "<script>alert('Booking successfully recorded!');</script>";
+        } else {
+            echo "<script>alert('Failed to record booking. Please try again.');</script>";
+        }
+    } else {
+        echo "<script>alert('Invalid date or time selected. Please try again.');</script>";
+    }
+}
 ?>
-
 
 <body>
     <div class="main-booking">
@@ -34,7 +59,7 @@ $dateQuery = mysqli_query($con,$query);
                 Book Slot Pass for Wajebaat Takhmin
             </div>
             <!-- start of userdetails -->
-             <br>
+            <br>
             <div class="userdetails">
                 <div class="row align-items-start">
                     <div class="col">
@@ -55,9 +80,10 @@ $dateQuery = mysqli_query($con,$query);
                 </div>
             </div>
             <!-- end of userdetails -->
-             <br>
-             <hr>
-             <div class="userdue"><!-- start of userdue -->
+            <br>
+            <hr>
+            <div class="userdue">
+                <!-- start of userdue -->
                 <div class="text-center">
                     <p>1445 Dues</p>
                 </div>
@@ -75,81 +101,51 @@ $dateQuery = mysqli_query($con,$query);
                 <div class="text-center">
                     <p>Note: If you recently paid the Sabil / FMB dues then please Ignore This</p>
                 </div>
-             </div><!-- end of userdue -->
-             <br>
-             <hr>
-             <br>
-             <div class="selectslot"><!-- start of selectslot -->
-                <h4>Select Slot For Wajebaat Takhmin</h4>
-                <?php
-                
-                session_start();
-                   if(isset($_SESSION['userid'])){
+            </div>
+            <!-- end of userdue -->
+            <br>
+            <hr>
+            <br>
+            <form action="" method="POST" name="form">
+                <div class="selectslot">
+                    <!-- start of selectslot -->
+                    <h4>Select Slot For Wajebaat Takhmin</h4>
+                    <?php
+                    session_start();
+                    if (isset($_SESSION['userid'])) {
                     ?>
-
-                        <h1><?php  echo $_SESSION['userid']; ?></h1>                
-<?php
-                   } 
-
-                    unset($_SESSION['userid']);
-                ?>
-                <br>
-                <div class="dateselect">
-                    <select class="form-select" id="date" name='date' onchange="updateTimeSlots()" aria-label="Select Your Date">
-                      <?php 
-                     
-                      
-                      
-                      ?>
-                            <?php foreach ($availableDates as $date): ?>
-                                <option value="<?= $date ?>"><?= $date ?></option>
-                            <?php endforeach; ?>
-<?php
-
+                        <h1><?php echo $_SESSION['userid']; ?></h1>
+                    <?php
+                    }
+                    ?>
+                    <br>
+                    <div class="dateselect">
+                        <select class="form-select" id="date" name="date" onchange="updateTimeSlots()" aria-label="Select Your Date">
+                            <?php
+                            $isFirst = true;
                             while ($row = mysqli_fetch_assoc($dateQuery)) {
+                                if ($isFirst) {
+                                    $firstDate = $row['slot_date'];
+                                    $isFirst = false;
+                                }
                                 echo '<option value="' . $row['slot_date'] . '">' . $row['slot_date'] . '</option>';
                             }
-                           
-     ?>                       
-
-                    </select>
-                </div>
-                <br>
-                <div class="timeselect">
-                    <select class="form-select" id="time" name="time"  aria-label="Select Your Slot Time">
-                    <?php
-                    // Retrieve selected date from POST request
-                    // if (isset($_POST['selectedDate'])) {
-                    //     $selectedDate = mysqli_real_escape_string($con, $_POST['selectedDate']);
-                        
-                        // Query for available times based on selected date
-                        $selectedDate = $_POST['date'];
-                        $timeQuery = "SELECT `slot_time` FROM `slots` WHERE `slot_date` = '$selectedDate'";
-                        $result = mysqli_query($con, $timeQuery);
-                        // $timeQuery = "SELECT `slot_time` FROM `slots` WHERE `slot_date` = $selectedDate";
-                        // $result = mysqli_query($con, $timeQuery);
-
-                        // Populate dropdown options dynamically
-                        while ($row = mysqli_fetch_assoc($result)) {
                             ?>
-                            <option value="<?= $row['slot_time'] ?>"><?= $row['slot_time'] ?></option>
-                            <?php
-
-
-                        }
-                        ?>
-                        // while ($row = mysqli_fetch_assoc($result)) 
-                        //   
-                
-                     
-         
-                    </select>
+                        </select>
+                    </div>
+                    <br>
+                    <div class="timeselect">
+                        <select class="form-select" id="time" name="time" aria-label="Select Your Slot Time">
+                            <!-- Time slots will be populated dynamically -->
+                        </select>
+                    </div>
                 </div>
-             </div><!-- end of selectslot -->
-             <br>
-             <div class="text-center">
-                <button type="submit" id="" class="btn" onclick="location.href='confirmation.html'">Submit Your Slot</button>
-             </div>
+                <!-- end of selectslot -->
+                <br>
+                <div class="text-center">
+                    <button type="submit" id="" class="btn">Submit Your Slot</button>
+                </div>
+            </form>
         </div>
         <!-- end of container-booking -->
     </div>
@@ -157,24 +153,33 @@ $dateQuery = mysqli_query($con,$query);
     <script src="../js/bootstrap.bundle.min.js"></script>
     <script src="../js/js.js"></script>
     <script>
+        function updateTimeSlots() {
+            var selectedDate = document.getElementById('date').value || "<?php echo $firstDate; ?>";
+            console.log('Selected Date:', selectedDate); // Log selected date
 
+            // Clear the existing time dropdown
+            var timeDropdown = document.getElementById('time');
+            timeDropdown.innerHTML = '';
 
+            // Time slots fetched in PHP
+            var timeSlots = <?php echo json_encode($timeSlots); ?>;
 
-$(document).ready(()=>{
-//    $('#date').change();
-$('#date').change(function() {
+            // Filter times based on the selected date and populate the dropdown
+            var filteredTimes = timeSlots.filter(slot => slot.slot_date === selectedDate);
+            filteredTimes.forEach(function(slot) {
+                console.log('Adding time option:', slot.slot_time); // Log each time
+                var option = document.createElement('option');
+                option.value = slot.slot_time;
+                option.textContent = slot.slot_time;
+                timeDropdown.appendChild(option);
+            });
+        }
 
-    var selectedDate = $(this).val();
-    console.log(selectedDate);
-    
-    // You can now use the selectedDate variable in PHP for conditions
-});
-
-
-
-})
-        // Function to dynamically update time slots based on selected date
-      </script>
+        // Automatically trigger time slots for the default first date
+        document.addEventListener('DOMContentLoaded', function() {
+            updateTimeSlots();
+        });
+    </script>
 </body>
 
 </html>
