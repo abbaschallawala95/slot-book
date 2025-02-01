@@ -20,8 +20,8 @@ include('connection.php');
     
 
     if(isset($_POST["submit"])){
-$sabil = $_POST['sabilno'];
-$hofits = $_POST['hofits'];
+    $sabil = $_POST['sabilno'];
+    $hofits = $_POST['hofits'];
 
       $sql = "SELECT * FROM `users` WHERE `sabil_no`='$_POST[sabilno]' AND `its_no`='$_POST[hofits]'";
       $res = mysqli_query($con,$sql);
@@ -35,6 +35,7 @@ $hofits = $_POST['hofits'];
 
               $_SESSION['status'] = 'Enter Correct Information';
               $_SESSION['userid'] = $_POST['sabilno'];
+            
              
       }
   
@@ -59,6 +60,8 @@ $hofits = $_POST['hofits'];
                   ?>
                   <div class="alert alert-danger" role="alert">
                  <?php echo $_SESSION['status'];?>
+                 <?php echo $_SESSION['userid'];?>
+                 
                       </div>
                       <?php
 

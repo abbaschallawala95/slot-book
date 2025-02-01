@@ -28,7 +28,12 @@ while ($row = mysqli_fetch_assoc($slotsResult)) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $selectedDate = mysqli_real_escape_string($con, $_POST['date']);
     $selectedTime = mysqli_real_escape_string($con, $_POST['time']);
-    $userID = $_SESSION['userid'];
+
+
+
+
+        $userID = $_SESSION['userid'];
+    
 
     $slotID = null;
     foreach ($timeSlots as $slot) {
@@ -49,6 +54,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "<script>alert('Invalid date or time selected. Please try again.');</script>";
     }
 }
+?>
+
+
+
+
+<?php
+
+
 ?>
 
 <body>
