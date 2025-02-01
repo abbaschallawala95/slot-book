@@ -342,7 +342,6 @@ select option {
 
 .container-dashboard .col{
     display: flex;
-    justify-content: center;
 }
 
 table {
@@ -358,7 +357,7 @@ th, td {
     text-align: left;
 }
 th {
-    background-color: #4CAF50;
+    background-color: #164954;
     color: white;
 }
 .filter-container {
@@ -370,22 +369,25 @@ th {
     padding: 8px;
     width: 200px;
 }
-.pagination {
-    display: flex;
-    justify-content: center;
-    margin: 20px 0;
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    background: #164954 !important;
+    border: 2px solid #164954 !important;
+    color: white !important;
 }
-.pagination button {
-    padding: 10px 15px;
-    margin: 0 5px;
-    border: none;
-    background-color: #4CAF50;
-    color: white;
-    cursor: pointer;
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+    background-color: #bfe7ef!important;
+    color: #164954!important;
+    border-bottom: solid 4px #164954!important;
 }
-.pagination button.disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover{
+    background: #164954 !important;
+    border: 2px solid #164954 !important;
+    color: white !important;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover{
+    background: #164954 !important;
+    border: 2px solid #164954 !important;
+    color: white !important;
 }
 .card{
     padding: 2px;
@@ -411,11 +413,12 @@ th {
     }
 }
 
-/* dashboard page css */
+/* slotcreation page css */
 .heading-slotcreation{
     text-align: center;
     font-size: 30px;
     color: #164954;
+    
     }
 .container-slotcreation{
     background-color: #ffffff;

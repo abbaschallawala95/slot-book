@@ -51,7 +51,7 @@
                     <button type="button" class="btn btn-primary" onclick="location.href='slotcreation.html'">Slot Creation</button>
                 </div>
                 <div class="col generate">
-                    <button type="button" class="btn btn-success">Generate New Slot</button>
+                    <button type="button" class="btn btn-success">Book New Appointment</button>
                 </div>
             </div>
             <br>
