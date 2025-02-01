@@ -32,6 +32,16 @@ color: #ffffff;
     color: #164954;
     border-bottom: solid 4px #164954;
 }
+.container button{
+    background-color: #164954;
+    color: whitesmoke;
+}
+
+.container button:hover{
+    background-color: #bfe7ef;
+    color: #164954;
+    border-bottom: solid 4px #164954;
+}
 
 /* instrcutions page css */
 .main-instructions{
@@ -304,4 +314,151 @@ select option {
 .cancelreason textarea{
     border-radius: 10px;
     border-color: #164954;
+}
+
+/* dashboard page css */
+.container-dashboard{
+    background-color: #ffffff;
+    padding: 20px;
+    margin-top: 30px;
+    width: 90%;
+    height: 850px;
+    border-radius: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    overflow-y: auto;
+    display: block;
+}
+.container-dashboard button{
+    background-color: #164954;
+    color: whitesmoke;
+}
+
+.container-dashboard button:hover{
+    background-color: #bfe7ef;
+    color: #164954;
+    border-bottom: solid 4px #164954;
+}
+
+.container-dashboard .col{
+    display: flex;
+    justify-content: center;
+}
+
+table {
+    width: 100%;
+    margin: 20px 0;
+    border-collapse: collapse;
+}
+table, th, td {
+    border: 1px solid #ddd;
+}
+th, td {
+    padding: 8px;
+    text-align: left;
+}
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+.filter-container {
+    margin: 20px 0;
+    display: flex;
+    justify-content: space-between;
+}
+.filter-container input {
+    padding: 8px;
+    width: 200px;
+}
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+.pagination button {
+    padding: 10px 15px;
+    margin: 0 5px;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+}
+.pagination button.disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+.card{
+    padding: 2px;
+    background-color: #dbd4d42b;
+    border: 2px solid black;
+    overflow-x: auto;
+}
+
+@media (max-width: 480px) {
+    .main-dashboard .heading{
+        font-size: 30px;
+    }
+    .container-dashboard button{
+        background-color: #164954;
+        color: whitesmoke;
+        font-size: 15px;
+    }
+    
+    .container-dashboard button:hover{
+        background-color: #bfe7ef;
+        color: #164954;
+        border-bottom: solid 4px #164954;
+    }
+}
+
+/* dashboard page css */
+.heading-slotcreation{
+    text-align: center;
+    font-size: 30px;
+    color: #164954;
+    }
+.container-slotcreation{
+    background-color: #ffffff;
+    padding: 20px;
+    margin-top: 30px;
+    width: 90%;
+    height: 850px;
+    border-radius: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    overflow-y: auto;
+    display: block;
+}
+.container-slotcreation button{
+    background-color: #164954;
+    color: whitesmoke;
+}
+
+.container-slotcreation button:hover{
+    background-color: #bfe7ef;
+    color: #164954;
+    border-bottom: solid 4px #164954;
+}
+.container-slotcreation .row input{
+    /* margin-bottom: 20px; */
+    /* padding: 10px; */
+    /* font-size: 16px; */
+    border: 2px solid #164954 !important;
+    border-radius: 5px;
+    background-color: #164954;
+    color: #164954 !important;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+.container-slotcreation label{
+font-weight: bold;
+padding: 0;
+}
+.container-slotcreation .row input:focus {
+    border-color: #164954 !important;
+    box-shadow: 0 0 5px #164954 !important;
+}
+.container-slotcreation .row input  {
+    padding: 10px;
+    background-color: #ffffff;
 }

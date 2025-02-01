@@ -126,3 +126,8 @@ function updateTimeSlots() {
 }
 
 // end of slot selection
+
+//dashboard page starts here
+
+
+//dashboard page  ends here
