@@ -1,4 +1,3 @@
-// slotcreation.php
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,6 +10,15 @@
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
+    <style>
+        .main-slotcreation{
+        padding: 10px 20px;
+      }
+      .container-slotcreation{
+        margin-top:-15px;
+        background-color:transparent;
+      }
+    </style>
     <div class="main-slotcreation">
         <div class="container-slotcreation">
             <div class="heading-slotcreation">
@@ -20,12 +28,12 @@
             <form id="slotCreationForm" >
                 <div class="row">
                     <label for="date" class="form-label">Date:</label>
-                    <input type="text" class="form-control" placeholder="Enter Date Example - 00/00/25" id="date" name="date"/>
+                    <input type="date" class="form-control" id="date" name="date" required>
                 </div>
                 <br>
                 <div class="row">
                     <label for="time" class="form-label">Time:</label>
-                    <input type="text" class="form-control" placeholder="Enter Your Time" id="time" name="time"/>
+                    <input type="time" class="form-control" id="time" name="time" required>
                 </div>
                 <br>
                 <div class="row">
@@ -46,9 +54,9 @@
                 <div class="text-center">
                     <button type="submit" id="submit" class="btn">Create Slots</button>
                 </div>
-                <div id="message">
-
-                </div>
+                    <div id="message">
+                            
+                    </div>
             </form>
         </div>
     </div>

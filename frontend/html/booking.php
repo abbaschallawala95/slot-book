@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,50 +9,148 @@
     <!-- Your custom CSS -->
     <link rel="stylesheet" href="../css/style.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- <script>
+        // Get user data from localStorage
+        const userData = JSON.parse(localStorage.getItem('sabil_no'));
+        
+        // Verify user data exists
+        if (!userData || !) {
+            alert('Please login first');
+            window.location.href = 'index.php';
+        }
+    </script> -->
 </head>
 
 <?php
 session_start();
+
+
+
 include('connection.php');
 
-$query = "SELECT `slot_date` FROM `slots` GROUP BY `slot_date` ORDER BY `slot_date` ASC";
+// Enable error reporting
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+// Check if user is logged in
+if (!isset($_SESSION['userid'])) {
+    die("<script>alert('Please login to book a slot.');</script>");
+}
+
+$sessionID = $_SESSION['userid'];
+
+$query = "SELECT `s_date` FROM `booking` GROUP BY `s_date` ORDER BY `s_date` ASC";
 $dateQuery = mysqli_query($con, $query);
 $firstDate = '';
 
-$slotsQuery = "SELECT `slot_date`, `slot_time`, `id` FROM `slots`";
+$slotsQuery = "SELECT `s_date`, `s_time`, `count` FROM `booking`";
 $slotsResult = mysqli_query($con, $slotsQuery);
 $timeSlots = [];
 while ($row = mysqli_fetch_assoc($slotsResult)) {
     $timeSlots[] = $row;
 }
 
+// Verify user exists
+$userCheck = mysqli_query($con, "SELECT * FROM users WHERE sabil_no = '$sessionID'");
+$message = false;
+if (mysqli_num_rows($userCheck) !== 1) {
+    $message = true;
+}
+$items = mysqli_fetch_assoc($userCheck);
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $selectedDate = mysqli_real_escape_string($con, $_POST['date']);
-    $selectedTime = mysqli_real_escape_string($con, $_POST['time']);
 
-
-
-
-        $userID = $_SESSION['userid'];
-    
-
-    $slotID = null;
-    foreach ($timeSlots as $slot) {
-        if ($slot['slot_date'] === $selectedDate && $slot['slot_time'] === $selectedTime) {
-            $slotID = $slot['id'];
-            break;
-        }
+    // Validate inputs
+    if (empty($_POST['date']) || empty($_POST['time'])) {
+        http_response_code(400);
+        echo "Please select both date and time.";
+        exit();
     }
 
-    if ($slotID) {
-        $insertQuery = "INSERT INTO booking_details (book_id, date, time, userID) VALUES ('$slotID', '$selectedDate', '$selectedTime', '$userID')";
-        if (mysqli_query($con, $insertQuery)) {
-            echo "<script>alert('Booking successfully recorded!');</script>";
-        } else {
-            echo "<script>alert('Failed to record booking. Please try again.');</script>";
+    // Format date and time
+    $selectedDate = date('Y-m-d', strtotime($_POST['date']));
+    $selectedTime = date('H:i:s', strtotime($_POST['time']));
+    $userID = $items['id']; // Get user ID from form data
+
+
+    // Debugging: Print the received data
+    // echo "Received Data - Date: $selectedDate, Time: $selectedTime, User ID: $userID<br>";
+
+    $_SESSION['newid'] = $userID;
+
+    // Check slot availability
+    $slotQuery = "SELECT id, count, category FROM booking 
+                 WHERE s_date = '$selectedDate' 
+                 AND s_time = '$selectedTime' 
+                 AND count > 0";
+    $slotResult = mysqli_query($con, $slotQuery);
+
+    if (!$slotResult) {
+        http_response_code(500);
+        echo "Slot Query Failed: " . mysqli_error($con);
+        exit();
+    }
+
+    if (mysqli_num_rows($slotResult) === 1) {
+        $slot = mysqli_fetch_assoc($slotResult);
+        $slotID = $slot['id'];
+        $currentCount = $slot['count'];
+        $category = $slot['category'];
+
+        // Start transaction
+        mysqli_begin_transaction($con);
+
+
+
+        try {
+            $check = "SELECT * FROM `booked_slot` WHERE `user_id`='$userID'";
+            $checkResult = mysqli_query($con, $check);
+            if (!$checkResult) {
+                throw new Exception('Check Query Failed: ' . mysqli_error($con));
+            }
+
+            if (mysqli_num_rows($checkResult) == 0) {
+                http_response_code(400);
+                // Insert booking with category
+                $insertQuery = "INSERT INTO booked_slot (s_date, s_time, user_id, category, sabil_no, hof_its, hof_name) 
+                               VALUES ('$selectedDate', '$selectedTime', '$userID', '$category','$sessionID','$items[its_no]','$items[name]')";
+
+                // Debugging: Print the insert query
+
+
+                // Execute insert query
+                $insertResult = mysqli_query($con, $insertQuery);
+
+                if (!$insertResult) {
+                    throw new Exception('Insert error: ' . mysqli_error($con));
+                }
+
+                // Update slot count
+                $updateQuery = "UPDATE booking 
+                              SET count = count - 1 
+                              WHERE id = $slotID";
+                $updateResult = mysqli_query($con, $updateQuery);
+
+                if ($updateResult) {
+                    mysqli_commit($con);
+                    echo "Booking successful!";
+                    header('Location:confirmation.php');
+                    exit();
+                } else {
+                    throw new Exception('Update error: ' . mysqli_error($con));
+                }
+            } else {
+
+            }
+        } catch (Exception $e) {
+            mysqli_rollback($con);
+            http_response_code(500);
+            echo "Failed to record booking: {$e->getMessage()}";
+            exit();
         }
     } else {
-        echo "<script>alert('Invalid date or time selected. Please try again.');</script>";
+        http_response_code(400);
+        echo "Invalid date/time or no slots available.";
+        exit();
     }
 }
 ?>
@@ -63,11 +162,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
 ?>
+<style>
+    .container-booking {
+        height: auto;
+    }
+</style>
 
 <body>
     <div class="main-booking">
         <!-- start of container-booking -->
         <div class="container-booking">
+            <?php
+            $user = "SELECT * FROM `users` WHERE `sabil_no`='$_SESSION[userid]'";
+            $userResult = mysqli_query($con, $user);
+            $userData = mysqli_fetch_assoc($userResult);
+
+
+
+
+            $check = "SELECT * FROM `booked_slot` WHERE `sabil_no`='$_SESSION[userid]'";
+            $checkResult = mysqli_query($con, $check);
+            if (!$checkResult) {
+
+            } else {
+            }
+
+            ?>
             <div class="heading-confirmation text-center">
                 Book Slot Pass for Wajebaat Takhmin
             </div>
@@ -77,18 +197,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="row align-items-start">
                     <div class="col">
                         <label for="Sabilno">Sabil No.:</label>
-                        <span id="Sabilno">QS227</span>
+                        <span id="Sabilno"><?= $userData['sabil_no']; ?></span>
                     </div>
                     <div class="col">
                         <label for="itsno">HOF ITS:</label>
-                        <span id="itsno">50445540</span>
+                        <span id="itsno"><?= $userData['its_no']; ?></span>
                     </div>
                 </div>
                 <br>
                 <div class="row align-items-start">
                     <div class="col">
                         <label for="username">Name:</label>
-                        <span id="username">Abbas bhai Huzefa bhai Challawala</span>
+                        <span id="username"><?= $userData['name']; ?></span>
                     </div>
                 </div>
             </div>
@@ -103,11 +223,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="row align-items-start">
                     <div class="col">
                         <label for="Sabilno">FMB Due Amount:</label>
-                        <span id="Sabilno">40,000</span>
+
+                        <?php
+                        if (htmlspecialchars($userData['fmb_amount']) == 0) {
+                            echo "<span style='color:green;'>" . htmlspecialchars($userData['fmb_amount']) . "</span>";
+                        } else {
+                            echo "<span style='color:red;'>" . htmlspecialchars($userData['fmb_amount']) . "</span>";
+                        }
+
+
+                        ?>
+
                     </div>
                     <div class="col">
                         <label for="Sabilno">Sabil Due Amount:</label>
-                        <span id="Sabilno">40,000</span>
+                        <?php
+                        if (htmlspecialchars($userData['sabil_due_amount']) == 0) {
+                            echo "<span style='color:green;'>" . htmlspecialchars($userData['sabil_due_amount']) . "</span>";
+                        } else {
+                            echo "<span style='color:red;'> " . htmlspecialchars($userData['sabil_due_amount']) . "</span>";
+                        }
+
+
+                        ?>
                     </div>
                 </div>
                 <br>
@@ -124,24 +262,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <!-- start of selectslot -->
                     <h4>Select Slot For Wajebaat Takhmin</h4>
                     <?php
-                    session_start();
-                    if (isset($_SESSION['userid'])) {
-                    ?>
-                        <h1><?php echo $_SESSION['userid']; ?></h1>
-                    <?php
-                    }
-                    ?>
+                    // session_start();
+                    // if (isset($_SESSION['userid'])) {
+                    
+                    // }
+                    // ?>
                     <br>
                     <div class="dateselect">
-                        <select class="form-select" id="date" name="date" onchange="updateTimeSlots()" aria-label="Select Your Date">
+                        <select class="form-select" id="date" name="date" onchange="updateTimeSlots()"
+                            aria-label="Select Your Date">
                             <?php
                             $isFirst = true;
                             while ($row = mysqli_fetch_assoc($dateQuery)) {
                                 if ($isFirst) {
-                                    $firstDate = $row['slot_date'];
+                                    $firstDate = $row['s_date'];
                                     $isFirst = false;
                                 }
-                                echo '<option value="' . $row['slot_date'] . '">' . $row['slot_date'] . '</option>';
+                                echo '<option value="' . $row['s_date'] . '">' . $row['s_date'] . '</option>';
                             }
                             ?>
                         </select>
@@ -149,14 +286,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <br>
                     <div class="timeselect">
                         <select class="form-select" id="time" name="time" aria-label="Select Your Slot Time">
-                            <!-- Time slots will be populated dynamically -->
+                            <?php
+                            $timeSlots = [];
+                            $slotsQuery = "SELECT s_time, count FROM booking WHERE s_date = '$firstDate'";
+                            $slotsResult = mysqli_query($con, $slotsQuery);
+                            while ($row = mysqli_fetch_assoc($slotsResult)) {
+                                if ($row['count'] > 0) {
+                                    echo '<option value="' . $row['s_time'] . '">' . $row['s_time'] . ' (Available: ' . $row['count'] . ')</option>';
+                                }
+                            }
+                            ?>
                         </select>
                     </div>
                 </div>
                 <!-- end of selectslot -->
                 <br>
                 <div class="text-center">
-                    <button type="submit" id="" class="btn">Submit Your Slot</button>
+
+
+
+                    <button class="btn" type='submit' name='submit'>Submit Your Slot</button>
+
+
+
                 </div>
             </form>
         </div>
@@ -167,31 +319,59 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script src="../js/js.js"></script>
     <script>
         function updateTimeSlots() {
-            var selectedDate = document.getElementById('date').value || "<?php echo $firstDate; ?>";
-            console.log('Selected Date:', selectedDate); // Log selected date
-
-            // Clear the existing time dropdown
+            var selectedDate = document.getElementById('date').value;
             var timeDropdown = document.getElementById('time');
             timeDropdown.innerHTML = '';
 
-            // Time slots fetched in PHP
-            var timeSlots = <?php echo json_encode($timeSlots); ?>;
+            fetch('get_available_slots.php?date=' + selectedDate)
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Received data:', data);
 
-            // Filter times based on the selected date and populate the dropdown
-            var filteredTimes = timeSlots.filter(slot => slot.slot_date === selectedDate);
-            filteredTimes.forEach(function(slot) {
-                console.log('Adding time option:', slot.slot_time); // Log each time
-                var option = document.createElement('option');
-                option.value = slot.slot_time;
-                option.textContent = slot.slot_time;
-                timeDropdown.appendChild(option);
-            });
+                    // Clear existing options
+                    timeDropdown.innerHTML = '';
+
+                    if (Array.isArray(data) && data.length > 0) {
+                        data.forEach(slot => {
+                            var option = document.createElement('option');
+                            option.value = slot.s_time;
+                            option.textContent = slot.s_time + ' (' + 'Public' + ' - Available: ' + slot.count + ')';
+                            timeDropdown.appendChild(option);
+                        });
+                    } else {
+                        var option = document.createElement('option');
+                        option.textContent = 'No available slots';
+                        timeDropdown.appendChild(option);
+                    }
+                });
         }
 
         // Automatically trigger time slots for the default first date
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             updateTimeSlots();
         });
+
+        function submitBooking() {
+            const userData = JSON.parse(localStorage.getItem('userData'));
+            const form = document.forms['form'];
+            const formData = new FormData(form);
+
+            // Add user ID to form data
+            formData.append('user_id', userData.id);
+
+            fetch('', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.text())
+                .then(data => {
+                    document.body.innerHTML = data;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Booking failed. Please try again.');
+                });
+        }
     </script>
 </body>
 

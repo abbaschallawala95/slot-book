@@ -1,28 +1,25 @@
-    <?php
-    include("connection.php");
-   if(isset($_POST))
-    {
-        extract($_POST);
+<?php
+include("connection.php");
+if(isset($_POST))
+{
+    // Validate and format date/time
+    $sdate = date('Y-m-d', strtotime($_POST['date']));
+    $stime = date('H:i:s', strtotime($_POST['time']));
+    $count = intval($_POST['count']);
+    $category = mysqli_real_escape_string($con, $_POST['category']);
 
-    //   $Folder = "img/";
-    //   $OrderImage1 =$_FILES['image']['name'];
-    //   $Photo1=rand(999,1000).$_FILES['image']['name'];
-    //   $PhotoTemp1=$_FILES['image']['tmp_name'];
-    //   $UploadFile1=$Folder.$Photo1;
+    // Escape the formatted values
+    $sdate = mysqli_real_escape_string($con, $sdate);
+    $stime = mysqli_real_escape_string($con, $stime);
+    $count = mysqli_real_escape_string($con, $count);
 
-    $sdate = $_POST['date'];
-    $stime = $_POST['time'];
-    $count = $_POST['count'];
-    $sdate = $_POST['date'];
-
-
-   
-    if(mysqli_query($con,"INSERT INTO booking (s_date, s_time, count, category) VALUES ('$sdate','$stime', '$count','$category')"))
-    {
+    // Insert with proper data types
+    $query = "INSERT INTO booking (s_date, s_time, count, category) VALUES ('$sdate','$stime', '$count','$category')";
+    
+    if(mysqli_query($con, $query)) {
         echo 1;
-    }
-    else {
+    } else {
         echo mysqli_error($con);
     }
-    }
-    ?>
+}
+?>

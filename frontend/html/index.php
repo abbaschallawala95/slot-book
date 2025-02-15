@@ -1,8 +1,50 @@
 <?php
 session_start();
 include('connection.php');
-?>
 
+if(isset($_POST["submit"])){
+    $sabil = $_POST['sabilno'];
+    $hofits = $_POST['hofits'];
+
+    $sql = "SELECT * FROM `users` WHERE `sabil_no`='$sabil' ";
+    $res = mysqli_query($con, $sql);
+
+    if (!$res) {
+        die("Query Failed: " . mysqli_error($con));
+    }
+
+    if(mysqli_num_rows($res) == 1){
+        // Check if sabil_no is already in booked_slot
+
+        foreach($res as $item){
+
+            $check = "SELECT * FROM booked_slot WHERE `user_id`='$item[id]'";
+            $resCheck = mysqli_query($con, $check);
+    
+            if (!$resCheck) {
+                die("Query Failed: " . mysqli_error($con));
+            }
+    
+            if(mysqli_num_rows($resCheck) > 0){
+                // Redirect to confirmation.php if already booked
+                $_SESSION['userid'] = $sabil;
+                $_SESSION['newid'] = $item['id'];
+                header("Location: confirmation.php");
+                exit();
+            } else {
+                // Allow login and redirect to instructions.html
+                $_SESSION['userid'] = $sabil;
+                echo "<script>localStorage.setItem('sabil_no', '$sabil');</script>";
+                header("Location: instructions.html");
+                exit();
+            }
+        }
+
+    } else {
+        $_SESSION['status'] = 'Enter Correct Information';
+    }
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,34 +56,6 @@ include('connection.php');
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <!-- Your custom CSS -->
     <link rel="stylesheet" href="../css/style.css">
-
-    <?php
-    
-    
-
-    if(isset($_POST["submit"])){
-    $sabil = $_POST['sabilno'];
-    $hofits = $_POST['hofits'];
-
-      $sql = "SELECT * FROM `users` WHERE `sabil_no`='$_POST[sabilno]' AND `its_no`='$_POST[hofits]'";
-      $res = mysqli_query($con,$sql);
-
-      if(mysqli_num_rows($res)==1){
-
- 
-							// session_start();
-							header("Location:instructions.html");
-            }else{
-
-              $_SESSION['status'] = 'Enter Correct Information';
-              $_SESSION['userid'] = $_POST['sabilno'];
-            
-             
-      }
-  
-    }
-    
-    ?>
 </head>
 <body>
     <div class="main">
@@ -60,7 +74,6 @@ include('connection.php');
                   ?>
                   <div class="alert alert-danger" role="alert">
                  <?php echo $_SESSION['status'];?>
-                 <?php echo $_SESSION['userid'];?>
                  
                       </div>
                       <?php

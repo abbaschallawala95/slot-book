@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wajebaat Counter</title>
+<link rel="stylesheet" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" href="../css/style.css">
+<style>
+    .container-wajebaat {
+        max-width: 400px;
+        margin: 50px auto;
+        padding: 20px;
+        border-radius: 10px;
+        background-color: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .enteramount{
+        text-align: center;
+    }
+    .enteramount > label{
+        font-weight: bold;
+    }
+    h1 {
+        text-align: center;
+        color: #b8802a;
+    }
+
+    table {
+        margin: 20px auto;
+        border-collapse: collapse;
+        width: 80%;
+    }
+
+    th, td {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: left;
+        font-weight: bold;
+        color: #000000;
+    }
+
+    th {
+        background-color: #164954;
+        color: white;
+    }
+
+    input[type="number"] {
+        width: 100px;
+        padding: 8px;
+        border: 1px solid #164954;
+        border-radius: 5px;
+        text-align: center;
+        margin-right: 10px;
+        font-weight: bold;
+    }
+
+    #reset {
+        display: block;
+        margin: 0 auto;
+        padding: 8px 20px;
+        border: none;
+        border-radius: 5px;
+        background-color: #b8802a;
+        color: #fff;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    #reset:hover {
+        background-color: #b87f2a44;
+        color: #b8802a;
+        border-bottom: solid 4px #b8802a;
+    }
+</style>
+</head>
+<body>
+    <div class="container-wajebaat">
+    <h1>Wajebaat 1446</h1>
+    <br>
+    <div class="enteramount">
+        <label for="amount">Enter amount:</label>
+        <input type="number" class="for" id="amount" step="0.01" min="0" oninput="calculate()">
+    </div>
+    <table id="resultTable">
+        <tr>
+            <th>Wajebaat</th>
+            <th>Amount</th>
+        </tr>
+        <tr>
+            <td>Zakaat 25%</td>
+            <td id="Zakaat">0</td>
+        </tr>
+        <tr>
+            <td>Nazrul Makaam 15%</td>
+            <td id="NazrulMakaam">0</td>
+        </tr>
+        <tr>
+            <td>Khumus 40%</td>
+            <td id="Khams">0</td>
+        </tr>
+        <tr>
+            <td>Kafarat 5%</td>
+            <td id="Kafarat">0</td>
+        </tr>
+        <tr>
+            <td>Mannat 5%</td>
+            <td id="empty">0</td>
+        </tr>
+        <tr>
+            <td>Najwa 10%</td>
+            <td id="Najwa">0</td>
+        </tr>
+    </table>
+    <button type="button" class="btn btn-primary" onclick="resetValues()" name="reset" id="reset">Reset</button>
+</div>
+<br>
+    <div id="footer"></div>
+    <br>
+    <script>
+        fetch('footer.html')
+            .then(response => response.text())
+            .then(data => document.getElementById('footer').innerHTML = data);
+
+        function roundValue(value) {
+            const roundedValue = Math.round(value);
+            const diff = value - roundedValue;
+            return { roundedValue, diff };
+        }
+
+        function calculate() {
+            debugger;
+            const amount = parseFloat(document.getElementById("amount").value);
+            if (isNaN(amount)) {
+                alert("Please enter a valid number");
+                return;
+            }
+
+            const total = amount;
+            const Zakaat = amount * 0.25;
+            const roundedZakaat = roundValue(Zakaat);
+            const NazrulMakaam = amount * 0.15 + roundedZakaat.diff;
+            const roundedNazrulMakaam = roundValue(NazrulMakaam);
+            const Khams = amount * 0.4 + roundedNazrulMakaam.diff;
+            const roundedKhams = roundValue(Khams);
+            const Kafarat = amount * 0.05 + roundedKhams.diff;
+            const roundedKafarat = roundValue(Kafarat);
+            const empty = amount * 0.05 + roundedKafarat.diff;
+            const roundedempty = roundValue(empty);
+            const Najwa = amount * 0.1 + roundedempty.diff;
+            const roundedNajwa = roundValue(Najwa);
+
+            document.getElementById("Zakaat").textContent = roundedZakaat.roundedValue;
+            document.getElementById("NazrulMakaam").textContent = roundedNazrulMakaam.roundedValue;
+            document.getElementById("Khams").textContent = roundedKhams.roundedValue;
+            document.getElementById("Kafarat").textContent = roundedKafarat.roundedValue;
+            document.getElementById("empty").textContent = roundedempty.roundedValue;
+            document.getElementById("Najwa").textContent = roundedNajwa.roundedValue;
+            // document.getElementById("totalValue").textContent = total.toFixed(2);
+        }
+
+        function resetValues() {
+            document.getElementById("amount").value = "";
+            document.getElementById("Zakaat").textContent = "0";
+            document.getElementById("NazrulMakaam").textContent = "0";
+            document.getElementById("Khams").textContent = "0";
+            document.getElementById("Kafarat").textContent = "0";
+            document.getElementById("empty").textContent = "0";
+            document.getElementById("Najwa").textContent = "0";
+        }
+    </script>
+</body>
+</html>

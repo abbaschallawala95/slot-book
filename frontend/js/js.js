@@ -1,3 +1,9 @@
+localStorage.setItem("role", "admin");
+localStorage.setItem("role", "user");
+function logout() {
+  localStorage.removeItem("role");
+  window.location.href = "index.html";
+}
 // instruction page js
 const instructionsText = {
   en: [
@@ -65,40 +71,40 @@ function toggleNextButton() {
 // start of slot selection
 const slots = {
   "2025-03-05": [
-    "5 March 2025 8:30 - 9:00 am",
-    "5 March 2025 9:00 - 9:30 am",
-    "5 March 2025 9:30 - 10:00 am",
-    "5 March 2025 10:00 - 10:30 am",
+    "5 March 2025 8:30 - 9:00 am available(4)",
+    "5 March 2025 9:00 - 9:30 am available(5)",
+    "5 March 2025 9:30 - 10:00 am available(6)",
+    "5 March 2025 10:00 - 10:30 am available(0)",
   ],
   "2025-03-06": [
-    "6 March 2025 8:30 - 9:00 am",
-    "6 March 2025 9:00 - 9:30 am",
-    "6 March 2025 9:30 - 10:00 am",
-    "6 March 2025 10:00 - 10:30 am",
+    "6 March 2025 8:30 - 9:00 am available(5)",
+    "6 March 2025 9:00 - 9:30 am available(0)",
+    "6 March 2025 9:30 - 10:00 am available(3)",
+    "6 March 2025 10:00 - 10:30 am available(2)",
   ],
   "2025-03-07": [
-    "7 March 2025 8:30 - 9:00 am",
-    "7 March 2025 9:00 - 9:30 am",
-    "7 March 2025 9:30 - 10:00 am",
-    "7 March 2025 10:00 - 10:30 am",
+    "7 March 2025 8:30 - 9:00 am available(1)",
+    "7 March 2025 9:00 - 9:30 am available(6)",
+    "7 March 2025 9:30 - 10:00 am available(3)",
+    "7 March 2025 10:00 - 10:30 am available(2)",
   ],
   "2025-03-08": [
-    "8 March 2025 8:30 - 9:00 am",
-    "8 March 2025 9:00 - 9:30 am",
-    "8 March 2025 9:30 - 10:00 am",
-    "8 March 2025 10:00 - 10:30 am",
+    "8 March 2025 8:30 - 9:00 am available(2)",
+    "8 March 2025 9:00 - 9:30 am available(4)",
+    "8 March 2025 9:30 - 10:00 am available(3)",
+    "8 March 2025 10:00 - 10:30 am available(5)",
   ],
   "2025-03-09": [
-    "9 March 2025 8:30 - 9:00 am",
-    "9 March 2025 9:00 - 9:30 am",
-    "9 March 2025 9:30 - 10:00 am",
-    "9 March 2025 10:00 - 10:30 am",
+    "9 March 2025 8:30 - 9:00 am available(0)",
+    "9 March 2025 9:00 - 9:30 am available(2)",
+    "9 March 2025 9:30 - 10:00 am available(6)",
+    "9 March 2025 10:00 - 10:30 am available(4)",
   ],
   "2025-03-10": [
-    "10 March 2025 8:30 - 9:00 am",
-    "10 March 2025 9:00 - 9:30 am",
-    "10 March 2025 9:30 - 10:00 am",
-    "10 March 2025 10:00 - 10:30 am",
+    "10 March 2025 8:30 - 9:00 am available(2)",
+    "10 March 2025 9:00 - 9:30 am available(5)",
+    "10 March 2025 9:30 - 10:00 am available(1)",
+    "10 March 2025 10:00 - 10:30 am available(3)",
   ],
 };
 
@@ -128,7 +134,3 @@ function updateTimeSlots() {
 //dashboard page starts here
 
 //dashboard page  ends here
-let date = document.getElementById("date");
-const data = () => {
-  console.log(date);
-};

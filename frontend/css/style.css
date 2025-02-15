@@ -1,467 +1,547 @@
-body{
-    background-color: #61a0b1;
+body {
+  background-color: #61a0b1;
 }
 
 /* index page css */
-.main{
-    padding-top: 120px;
+.main {
+  padding-top: 120px;
 }
 
-.heading{
-text-align: center;
-font-size: 35px;
-color: #ffffff;
+.heading {
+  text-align: center;
+  font-size: 35px;
+  color: #ffffff;
 }
 
-.container{
-    background-color: #ffffff;
-    padding: 20px;
-    margin-top: 20px;
-    width: 85%;
-    height: 350px;
-    border-radius: 20px;
+.container {
+  background-color: #ffffff;
+  padding: 20px;
+  margin-top: 20px;
+  width: 85%;
+  height: 350px;
+  border-radius: 20px;
 }
 
-.container input[type='submit']{
-    background-color: #164954;
-    color: whitesmoke;
+.container input[type="submit"] {
+  background-color: #164954;
+  color: whitesmoke;
 }
 
-.container input[type='submit']:hover{
-    background-color: #bfe7ef;
-    color: #164954;
-    border-bottom: solid 4px #164954;
+.container input[type="submit"]:hover {
+  background-color: #bfe7ef;
+  color: #164954;
+  border-bottom: solid 4px #164954;
 }
-.container button{
-    background-color: #164954;
-    color: whitesmoke;
+.container button {
+  background-color: #164954;
+  color: whitesmoke;
 }
 
-.container button:hover{
-    background-color: #bfe7ef;
-    color: #164954;
-    border-bottom: solid 4px #164954;
+.container button:hover {
+  background-color: #bfe7ef;
+  color: #164954;
+  border-bottom: solid 4px #164954;
 }
 
 /* instrcutions page css */
-.main-instructions{
-    padding-top: 100px;
+.main-instructions {
+  padding-top: 50px;
 }
 
-.heading-instructions{
-    text-align: center;
-    font-size: 35px;
-    color: #ffffff;
-    }
-
-.container-instructions{
-    background-color: #ffffff;
-    padding: 20px;
-    margin-top: 10px;
-    width: 85%;
-    height: 590px;
-    border-radius: 20px;
-    margin-left: auto;
-    margin-right: auto;
-    overflow-y: auto;
+.heading-instructions {
+  text-align: center;
+  font-size: 35px;
+  color: #ffffff;
 }
 
-.container-instructions button{
-    background-color: #164954;
-    color: whitesmoke;
+.container-instructions {
+  background-color: #ffffff;
+  padding: 20px;
+  margin-top: 10px;
+  width: 85%;
+  height: 550px;
+  border-radius: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  overflow-y: auto;
 }
 
-.container-instructions button:hover{
-    background-color: #bfe7ef;
-    color: #164954;
-    border-bottom: solid 4px #164954;
+.container-instructions button {
+  background-color: #164954;
+  color: whitesmoke;
+}
+
+.container-instructions button:hover {
+  background-color: #bfe7ef;
+  color: #164954;
+  border-bottom: solid 4px #164954;
 }
 .language-buttons {
-    text-align: center;
-    /* margin-bottom: 15px; */
+  text-align: center;
+  /* margin-bottom: 15px; */
 }
 
 .language-buttons button {
-    margin: 0 10px;
+  margin: 0 10px;
 }
 
 .btn-primary.active {
-    background-color: #164954;
-    border-color: #164954;
+  background-color: #164954;
+  border-color: #164954;
 }
 
 .btn-secondary {
-    background-color: #ffffff !important;
-    border-color: #164954 !important;
-    color: #164954 !important
+  background-color: #ffffff !important;
+  border-color: #164954 !important;
+  color: #164954 !important;
 }
 
 #nextButton {
-    background-color: #bfe7ef;
-    color: #164954;
-    border: none;
-    padding: 10px 20px;
-    cursor: not-allowed;
+  background-color: #bfe7ef;
+  color: #164954;
+  border: none;
+  padding: 10px 20px;
+  cursor: not-allowed;
 }
 #nextButton.active {
-    background-color: #164954;
-    color: whitesmoke;
-    cursor: pointer;    
+  background-color: #164954;
+  color: whitesmoke;
+  cursor: pointer;
 }
 
 #nextButton.active:hover {
-    background-color: #bfe7ef;
-    color: #164954;
-    border-bottom: solid 4px #164954;
-    cursor: pointer;    
+  background-color: #bfe7ef;
+  color: #164954;
+  border-bottom: solid 4px #164954;
+  cursor: pointer;
 }
 
 .checkbox-container input[type="checkbox"] {
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-    appearance: none;
-    -webkit-appearance: none; /* For Safari */
-    border: 2px solid #ccc;
-    border-radius: 5px;
-    outline: none;
-    transition: all 0.3s ease;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none; /* For Safari */
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  transition: all 0.3s ease;
 }
 .checkbox-container input[type="checkbox"]:checked {
-    background-color: #164954; /* Green background when checked */
-    border-color: #164954; /* Border color when checked */
+  background-color: #164954; /* Green background when checked */
+  border-color: #164954; /* Border color when checked */
 }
 .checkbox-container input[type="checkbox"]:checked::after {
-    content: '\27A5'; /* Checkmark character */
-    display: block;
-    color: white;
-    font-size: 14px;
-    text-align: center;
-    line-height: 20px;
+  content: "\27A5"; /* Checkmark character */
+  display: block;
+  color: white;
+  font-size: 14px;
+  text-align: center;
+  line-height: 20px;
 }
 
 /* booking page css */
-.container-booking{
-    background-color: #ffffff;
-    padding: 20px;
-    margin-top: 30px;
-    width: 90%;
-    height: 850px;
-    border-radius: 20px;
-    margin-left: auto;
-    margin-right: auto;
-    overflow-y: auto;
+.container-booking {
+  background-color: #ffffff;
+  padding: 20px;
+  margin-top: 30px;
+  width: 90%;
+  height: 750px;
+  border-radius: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  overflow-y: auto;
 }
-.container-booking button{
-    background-color: #164954;
-    color: whitesmoke;
-}
-
-.container-booking button:hover{
-    background-color: #bfe7ef;
-    color: #164954;
-    border-bottom: solid 4px #164954;
+.container-booking button {
+  background-color: #164954;
+  color: whitesmoke;
 }
 
-.container-booking .col{
-    font-size: 17px;
+.container-booking button:hover {
+  background-color: #bfe7ef;
+  color: #164954;
+  border-bottom: solid 4px #164954;
 }
 
-.userdetails label{
-    font-weight: bold;
+.container-booking .col {
+  font-size: 17px;
 }
 
-.userdue p{
-    font-weight: bold;
-    color: red;
-    font-size: 15px;
+.userdetails label {
+  font-weight: bold;
 }
 
-.userdue label{
-    font-weight: bold;
+.userdue p {
+  font-weight: bold;
+  color: red;
+  font-size: 15px;
 }
 
-.userdue span{
-    font-weight: bold;
-    color: red;
+.userdue label {
+  font-weight: bold;
+}
+
+.userdue span {
+  font-weight: bold;
+  color: red;
 }
 
 select {
-    /* margin-bottom: 20px; */
-    /* padding: 10px; */
-    /* font-size: 16px; */
-    border: 2px solid #164954 !important;
-    border-radius: 5px;
-    background-color: #164954;
-    color: #164954 !important;
-    outline: none;
-    transition: border-color 0.3s, box-shadow 0.3s;
+  /* margin-bottom: 20px; */
+  /* padding: 10px; */
+  /* font-size: 16px; */
+  border: 2px solid #164954 !important;
+  border-radius: 5px;
+  background-color: #164954;
+  color: #164954 !important;
+  outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s;
 }
 select:focus {
-    border-color: #164954 !important;
-    box-shadow: 0 0 5px #164954 !important;
+  border-color: #164954 !important;
+  box-shadow: 0 0 5px #164954 !important;
 }
 select option {
-    padding: 10px;
-    background-color: #d2eded;
+  padding: 10px;
+  background-color: #d2eded;
 }
 
 /* confirmation page css */
-.container-confirmation{
-    background-color: #ffffff;
-    padding: 20px;
-    margin-top: 30px;
-    width: 90%;
-    height: 850px;
-    border-radius: 20px;
-    margin-left: auto;
-    margin-right: auto;
-    overflow-y: auto;
+.container-confirmation {
+  background-color: #ffffff;
+  padding: 20px;
+  margin-top: 30px;
+  width: 90%;
+  height: 750px;
+  border-radius: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  overflow-y: auto;
 }
-.container-confirmation button{
-    background-color: #164954;
-    color: whitesmoke;
-}
-
-.container-confirmation button:hover{
-    background-color: #bfe7ef;
-    color: #164954;
-    border-bottom: solid 4px #164954;
+.container-confirmation button {
+  background-color: #164954;
+  color: whitesmoke;
 }
 
-.container-confirmation .col{
-    font-size: 17px;
+.container-confirmation button:hover {
+  background-color: #bfe7ef;
+  color: #164954;
+  border-bottom: solid 4px #164954;
 }
 
-.userdetails-confirmation label{
-    font-weight: bold;
+.container-confirmation .col {
+  font-size: 17px;
 }
 
-.selectslot-confirmation h4{
-    color: green;
+.userdetails-confirmation label {
+  font-weight: bold;
 }
 
-.selectslot-confirmation span{
-    color: green;
-    font-size: 25px;
-    font-weight: bold;
+.selectslot-confirmation h4 {
+  color: green;
 }
 
-
-.userdue-confirmation p{
-    font-weight: bold;
-    color: red;
-    font-size: 10 px;
+.selectslot-confirmation span {
+  color: green;
+  font-size: 25px;
+  font-weight: bold;
 }
 
-.userdue-confirmation label{
-    font-weight: bold;
+.userdue-confirmation p {
+  font-weight: bold;
+  color: red;
+  font-size: 10 px;
 }
 
-.userdue-confirmation span{
-    font-weight: bold;
-    color: red;
+.userdue-confirmation label {
+  font-weight: bold;
 }
 
-.heading-confirmation{
-    font-weight: bolder;
-    font-size: 20px;
-    color:#b8802a;
+.userdue-confirmation span {
+  font-weight: bold;
+  color: red;
 }
 
-.logout a{
-    color: #b8802a;
+.heading-confirmation {
+  font-weight: bolder;
+  font-size: 20px;
+  color: #b8802a;
 }
 
-.logout a:hover{
-    color: #164954;
+.logout a {
+  color: #b8802a;
 }
 
+.logout a:hover {
+  color: #164954;
+}
 
 /* cancel page css */
-.container-cancel{
-    background-color: #ffffff;
-    padding: 20px;
-    margin-top: 30px;
-    width: 90%;
-    height: 850px;
-    border-radius: 20px;
-    margin-left: auto;
-    margin-right: auto;
-    overflow-y: auto;
+.container-cancel {
+  background-color: #ffffff;
+  padding: 20px;
+  margin-top: 30px;
+  width: 90%;
+  height: 650px;
+  border-radius: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  overflow-y: auto;
 }
-.container-cancel button{
-    background-color: #164954;
-    color: whitesmoke;
-}
-
-.container-cancel button:hover{
-    background-color: #bfe7ef;
-    color: #164954;
-    border-bottom: solid 4px #164954;
+.container-cancel button {
+  background-color: #164954;
+  color: whitesmoke;
 }
 
-.slotcancel{
-    color: red;
-    font-size: 17px;
-    font-weight: bold;
+.container-cancel button:hover {
+  background-color: #bfe7ef;
+  color: #164954;
+  border-bottom: solid 4px #164954;
 }
 
-.cancelreason label{
-    font-weight: bold;
+.slotcancel {
+  color: red;
+  font-size: 17px;
+  font-weight: bold;
 }
 
-.cancelreason textarea{
-    border-radius: 10px;
-    border-color: #164954;
+.cancelreason label {
+  font-weight: bold;
+}
+
+.cancelreason textarea {
+  border-radius: 10px;
+  border-color: #164954;
 }
 
 /* dashboard page css */
-.container-dashboard{
-    background-color: #ffffff;
-    padding: 20px;
-    margin-top: 30px;
-    width: 90%;
-    height: 850px;
-    border-radius: 20px;
-    margin-left: auto;
-    margin-right: auto;
-    overflow-y: auto;
-    display: block;
+.container-dashboard {
+  background-color: #ffffff;
+  padding: 20px;
+  margin-top: 30px;
+  width: 90%;
+  height: 850px;
+  border-radius: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  overflow-y: auto;
+  display: block;
 }
-.container-dashboard button{
-    background-color: #164954;
-    color: whitesmoke;
-}
-
-.container-dashboard button:hover{
-    background-color: #bfe7ef;
-    color: #164954;
-    border-bottom: solid 4px #164954;
+.container-dashboard button {
+  background-color: #164954;
+  color: whitesmoke;
 }
 
-.container-dashboard .col{
-    display: flex;
+.container-dashboard button:hover {
+  background-color: #bfe7ef;
+  color: #164954;
+  border-bottom: solid 4px #164954;
+}
+
+.container-dashboard .col {
+  display: flex;
 }
 
 table {
-    width: 100%;
-    margin: 20px 0;
-    border-collapse: collapse;
+  width: 100%;
+  margin: 20px 0;
+  border-collapse: collapse;
 }
-table, th, td {
-    border: 1px solid #ddd;
+table,
+th,
+td {
+  border: 1px solid #ddd;
 }
-th, td {
-    padding: 8px;
-    text-align: left;
+th,
+td {
+  padding: 8px;
+  text-align: left;
 }
 th {
-    background-color: #164954;
-    color: white;
+  background-color: #164954;
+  color: white;
 }
 .filter-container {
-    margin: 20px 0;
-    display: flex;
-    justify-content: space-between;
+  margin: 20px 0;
+  display: flex;
+  justify-content: space-between;
 }
 .filter-container input {
-    padding: 8px;
-    width: 200px;
+  padding: 8px;
+  width: 200px;
 }
 .dataTables_wrapper .dataTables_paginate .paginate_button.current {
-    background: #164954 !important;
-    border: 2px solid #164954 !important;
-    color: white !important;
+  background: #164954 !important;
+  border: 2px solid #164954 !important;
+  color: white !important;
 }
 .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
-    background-color: #bfe7ef!important;
-    color: #164954!important;
-    border-bottom: solid 4px #164954!important;
+  background-color: #bfe7ef !important;
+  color: #164954 !important;
+  border-bottom: solid 4px #164954 !important;
 }
-.dataTables_wrapper .dataTables_paginate .paginate_button:hover{
-    background: #164954 !important;
-    border: 2px solid #164954 !important;
-    color: white !important;
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+  background: #164954 !important;
+  border: 2px solid #164954 !important;
+  color: white !important;
 }
-.dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover{
-    background: #164954 !important;
-    border: 2px solid #164954 !important;
-    color: white !important;
+.dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover {
+  background: #164954 !important;
+  border: 2px solid #164954 !important;
+  color: white !important;
 }
-.card{
-    padding: 2px;
-    background-color: #dbd4d42b;
-    border: 2px solid black;
-    overflow-x: auto;
+.card {
+  padding: 2px;
+  background-color: #dbd4d42b;
+  border: 2px solid black;
+  overflow-x: auto;
 }
 
 @media (max-width: 480px) {
-    .main-dashboard .heading{
-        font-size: 30px;
-    }
-    .container-dashboard button{
-        background-color: #164954;
-        color: whitesmoke;
-        font-size: 15px;
-    }
-    
-    .container-dashboard button:hover{
-        background-color: #bfe7ef;
-        color: #164954;
-        border-bottom: solid 4px #164954;
-    }
-}
-
-/* slotcreation page css */
-.heading-slotcreation{
-    text-align: center;
+  .main-dashboard .heading {
     font-size: 30px;
-    color: #164954;
-    
-    }
-.container-slotcreation{
-    background-color: #ffffff;
-    padding: 20px;
-    margin-top: 30px;
-    width: 90%;
-    height: 850px;
-    border-radius: 20px;
-    margin-left: auto;
-    margin-right: auto;
-    overflow-y: auto;
-    display: block;
-}
-.container-slotcreation button{
+  }
+  .container-dashboard button {
     background-color: #164954;
     color: whitesmoke;
-}
+    font-size: 15px;
+  }
 
-.container-slotcreation button:hover{
+  .container-dashboard button:hover {
     background-color: #bfe7ef;
     color: #164954;
     border-bottom: solid 4px #164954;
+  }
 }
-.container-slotcreation .row input{
-    /* margin-bottom: 20px; */
-    /* padding: 10px; */
-    /* font-size: 16px; */
-    border: 2px solid #164954 !important;
-    border-radius: 5px;
-    background-color: #164954;
-    color: #164954 !important;
-    outline: none;
-    transition: border-color 0.3s, box-shadow 0.3s;
+
+/* slotcreation page css */
+.heading-slotcreation {
+  text-align: center;
+  font-size: 30px;
+  color: #164954;
 }
-.container-slotcreation label{
-font-weight: bold;
-padding: 0;
+.container-slotcreation {
+  background-color: #ffffff;
+  padding: 20px;
+  margin-top: 30px;
+  width: 90%;
+  height: 600px;
+  border-radius: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  overflow-y: auto;
+  display: block;
+}
+.container-slotcreation button {
+  background-color: #164954;
+  color: whitesmoke;
+}
+
+.container-slotcreation button:hover {
+  background-color: #bfe7ef;
+  color: #164954;
+  border-bottom: solid 4px #164954;
+}
+.container-slotcreation .row input {
+  /* margin-bottom: 20px; */
+  /* padding: 10px; */
+  /* font-size: 16px; */
+  border: 2px solid #164954 !important;
+  border-radius: 5px;
+  background-color: #164954;
+  color: #164954 !important;
+  outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.container-slotcreation label {
+  font-weight: bold;
+  padding: 0;
 }
 .container-slotcreation .row input:focus {
-    border-color: #164954 !important;
-    box-shadow: 0 0 5px #164954 !important;
+  border-color: #164954 !important;
+  box-shadow: 0 0 5px #164954 !important;
 }
-.container-slotcreation .row input  {
-    padding: 10px;
-    background-color: #ffffff;
+.container-slotcreation .row input {
+  padding: 10px;
+  background-color: #ffffff;
+}
+.container-slotcreation a {
+  color: #164954;
+}
+.container-slotcreation a:hover {
+  color: #316f7bbb;
+}
+
+/* appointment page css */
+.heading-appointment {
+  text-align: center;
+  font-size: 30px;
+  color: #164954;
+}
+.container-appointment {
+  background-color: #ffffff;
+  padding: 20px;
+  margin-top: 30px;
+  width: 90%;
+  height: 530px;
+  border-radius: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  overflow-y: auto;
+  display: block;
+}
+.container-appointment button {
+  background-color: #164954;
+  color: whitesmoke;
+}
+
+.container-appointment button:hover {
+  background-color: #bfe7ef;
+  color: #164954;
+  border-bottom: solid 4px #164954;
+}
+.container-appointment a {
+  color: #164954;
+}
+.container-appointment a:hover {
+  color: #316f7bbb;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+  background: #164954 !important;
+  border: 2px solid #164954 !important;
+  color: white !important;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+  background-color: #bfe7ef !important;
+  color: #164954 !important;
+  border-bottom: solid 4px #164954 !important;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+  background: #164954 !important;
+  border: 2px solid #164954 !important;
+  color: white !important;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover {
+  background: #164954 !important;
+  border: 2px solid #164954 !important;
+  color: white !important;
+}
+.card {
+  padding: 2px;
+  background-color: #dbd4d42b;
+  border: 2px solid black;
+  overflow-x: auto;
+  height: 500px;
+}
+.container-appointment label {
+  font-weight: bold;
+  padding: 0;
+}
+.container-appointment input:focus {
+  border-color: #164954 !important;
+  box-shadow: 0 0 5px #164954 !important;
+}
+.container-appointment input {
+  padding: 10px;
+  background-color: #ffffff;
 }

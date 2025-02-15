@@ -1,49 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Slot Booking Instruction</title>
-    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
     <!-- Your custom CSS -->
-    <link rel="stylesheet" href="../css/style.css">
-</head>
-<body onload="initializePage()">
-    
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+  <body onload="initializePage()">
     <div class="main-instructions">
-        <div class="heading-instructions">
-            Terms and Conditons
+      <div class="heading-instructions">Terms and Conditons</div>
+
+      <div class="container-instructions">
+        <div class="language-buttons">
+          <button
+            id="englishBtn"
+            class="btn btn-primary active"
+            onclick="setLanguage('en')"
+          >
+            English
+          </button>
+          <button
+            id="gujaratiBtn"
+            class="btn btn-secondary"
+            onclick="setLanguage('gu')"
+          >
+            ગુજરાતી
+          </button>
         </div>
-            
-        <div class="container-instructions">
-            <div class="language-buttons">
-                <button id="englishBtn" class="btn btn-primary active" onclick="setLanguage('en')">English</button>
-                <button id="gujaratiBtn" class="btn btn-secondary" onclick="setLanguage('gu')">ગુજરાતી</button>
-            </div>
-            <br>
-            <div id="instructions">
-                <p>1. Please read all instructions carefully.</p>
-                <p>2. Ensure that you understand the process completely.</p>
-                <p>3. Follow all safety guidelines provided.</p>
-                <p>4. Provide accurate information as required.</p>
-                <p>5. Contact support if you need assistance.</p>
-                <p>6. Contact support if you need assistance.</p>
-                <p>7. Contact support if you need assistance.</p>
-                <p>8. Contact support if you need assistance.</p>
-            </div>
-            <div class="checkbox-container">
-                <input type="checkbox" id="agreeCheckbox" onclick="toggleNextButton()">
-                <label for="agreeCheckbox">I agree to the terms and conditions</label>
-            </div>
-            <br>
-            <div class="text-center">
-                <button type="submit" id="nextButton" class="btn" onclick="location.href='booking.html'">Proceed to Book Your Slot</button>
-            </div>
+        <br />
+        <div id="instructions">
+          <p>1. Please read all instructions carefully.</p>
+          <p>2. Ensure that you understand the process completely.</p>
+          <p>3. Follow all safety guidelines provided.</p>
+          <p>4. Provide accurate information as required.</p>
+          <p>5. Contact support if you need assistance.</p>
+          <p>6. Contact support if you need assistance.</p>
+          <p>7. Contact support if you need assistance.</p>
+          <p>8. Contact support if you need assistance.</p>
         </div>
+        <div class="checkbox-container">
+          <input
+            type="checkbox"
+            id="agreeCheckbox"
+            onclick="toggleNextButton()"
+          />
+          <label for="agreeCheckbox">I agree to the terms and conditions</label>
+        </div>
+        <br />
+        <div class="text-center">
+          <button
+            type="submit"
+            id="nextButton"
+            class="btn"
+            onclick="location.href='booking.php'"
+          >
+            Proceed to Book Your Slot
+          </button>
+        </div>
+      </div>
     </div>
     <!-- Bootstrap Bundle with Popper -->
     <script src="../js/bootstrap.bundle.min.js"></script>
     <script src="../js/js.js"></script>
-    
-</body>
+  </body>
 </html>
+
