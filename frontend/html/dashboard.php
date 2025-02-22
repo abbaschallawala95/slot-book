@@ -24,7 +24,9 @@ session_start();
         }
 
         .card {
-            overflow-y: scroll;
+            width: auto;
+            height: auto;
+            overflow: auto;
         }
 
         .heading {
@@ -201,7 +203,8 @@ if (!isset($_SESSION['admin'])) {
                         <tr>
                             <th>Sr No.</th>
                             <th>Date</th>
-                            <th>Time</th>
+                            <th>From</th>
+                            <th>To</th>
                             <th>Sabil No</th>
                             <th>HOF Its</th>
                             <th>Name</th>
@@ -221,7 +224,8 @@ if (!isset($_SESSION['admin'])) {
                                 ?>
                                 <td><?php echo $slotItems['id']; ?></td>
                                 <td><?php echo $slotItems['s_date']; ?></td>
-                                <td><?php echo $slotItems['s_time']; ?></td>
+                                <td><?php echo $slotItems['s_ftime']; ?></td>
+                                <td><?php echo $slotItems['s_ttime']; ?></td>
                                 <td><?php echo $slotItems['sabil_no']; ?></td>
                                 <td><?php echo $slotItems['hof_its']; ?></td>
                                 <td><?php echo $slotItems['hof_name']; ?></td>
@@ -250,7 +254,7 @@ if (!isset($_SESSION['admin'])) {
                                         $id = $_POST['sabilno'];
 
                                         $status = $_POST['status']; // Get the selected status
-                                
+                                        echo $status;
                                         // Update query
                                         // $updateQuery = "INSERT INTO booked_slot (`s_status`) VALUES ('$status') WHERE `sabil_no`='$id'";
                                 
@@ -280,10 +284,6 @@ if (!isset($_SESSION['admin'])) {
                                 </td>
                                 <input type="hidden" name="sabilno" value="<?php echo $slotItems['sabil_no']; ?>">
 
-                                <td>
-                                    <button type="submit" name='submit' class='btn'>Update</button>
-
-                                </td>
                                 <td>
                                     <button type="submit" name='submit' class='btn'>Update</button>
 

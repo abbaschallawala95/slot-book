@@ -1,0 +1,176 @@
+<style>
+    /* Basic page sizing to ensure we have scrollable space */
+    /* If your Shopify page is tall enough, you can remove or reduce this. */
+
+    /* Parallax Section - using background image */
+    #stats-section {
+      position: relative;
+      width: 100%;
+      min-height: 50vh; /* Reduced height */
+      display: flex;
+      border-radius:16px;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      overflow: hidden; /* Keep content over the background */
+      background: url("https://cdn.shopify.com/s/files/1/0726/1958/9873/files/bg.jpg?v=1739947275") no-repeat center 0;
+      background-size: 160%;
+    }
+
+    /* Use ::before as an overlay */
+    #stats-section::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(84, 179, 91, 0.8);
+      z-index: 1;
+    }
+
+    /* Content Wrapper on top of overlay */
+    #stats-section .content-wrapper {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 2rem;
+      width: 100%;
+      max-width: 1200px; /* optional: limit max width for responsiveness */
+      margin: 0 auto;
+    }
+
+    /* Headings */
+    .sub-heading {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+      color: white;
+      letter-spacing: 2px;
+    }
+
+    .main-heading {
+      font-size: 3rem;
+      margin-bottom: 30px;
+      color: white;
+      letter-spacing: 2px;
+    }
+
+    /* Counters Container */
+    .counters {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    /* Individual counter boxes */
+    .counter-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .counter {
+      font-family: 'Prata', serif; /* If Shopify has this font, or fallback to a default serif */
+      font-size: 45px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .counter-box p {
+      margin: 0;
+      font-size: 14px;
+    }
+</style>
+
+
+
+  <section id="stats-section">
+    <!-- Counters + Headings -->
+    <div class="content-wrapper">
+      <h3 class="sub-heading">FUN FACTS</h3>
+      <h2 class="main-heading">We have Some Number of Great Achievements</h2>
+
+      <div class="counters">
+        <div class="counter-box">
+          <span class="counter" data-target="90">0</span>
+          <p>Garden Completed</p>
+        </div>
+        <div class="counter-box">
+          <span class="counter" data-target="216">0</span>
+          <p>Satisfied Clients</p>
+        </div>
+        <div class="counter-box">
+          <span class="counter" data-target="35">0</span>
+          <p>Experience Staff</p>
+        </div>
+        <div class="counter-box">
+          <span class="counter" data-target="10">0</span>
+          <p>Award Win</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GSAP + ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Register ScrollTrigger plugin
+      gsap.registerPlugin(ScrollTrigger);
+
+      /*
+       * 1. Parallax background using GSAP
+       * We'll animate the background-position from (center 0) to (center -50px)
+       * with a scrub duration for a smoother, slower movement.
+       */
+      gsap.to("#stats-section", {
+        backgroundPosition: "center -30px", // minor shift upward
+        ease: "none",
+        scrollTrigger: {
+          trigger: "#stats-section",
+          start: "top top",
+          end: "bottom top",
+          scrub: 4, // 1-second scrub duration
+        }
+      });
+
+      /*
+       * 2. IntersectionObserver for counters
+       * The counters increment from 0 to data-target when the section comes into view.
+       */
+      const counters = document.querySelectorAll(".counter");
+      const statsSection = document.getElementById("stats-section");
+
+      let sectionObserver = new IntersectionObserver(
+        function (entries, observer) {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              // Start counting
+              counters.forEach((counter) => {
+                function updateCount() {
+                  const target = +counter.getAttribute("data-target");
+                  const current = +counter.innerText;
+                  const increment = Math.ceil(target / 100); // Speed factor
+
+                  if (current < target) {
+                    counter.innerText = current + increment;
+                    setTimeout(updateCount, 20);
+                  } else {
+                    counter.innerText = target;
+                  }
+                }
+                updateCount();
+              });
+              // Unobserve so it doesn't trigger again
+              observer.unobserve(statsSection);
+            }
+          });
+        },
+        { threshold: 0.4 }
+      );
+
+      sectionObserver.observe(statsSection);
+    });
+  </script>

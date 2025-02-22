@@ -65,7 +65,7 @@ if (isset($_SESSION['admin'])) {
 
         <form method="post">
           <?php
-          if (isset($_SESSION['checkadmin'])) {
+          if (isset($_SESSION['admin'])) {
             ?>
             <div class="alert alert-danger" role="alert">
 

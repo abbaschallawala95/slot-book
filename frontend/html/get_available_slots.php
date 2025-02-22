@@ -3,15 +3,16 @@ include('connection.php');
 
 if (isset($_GET['date'])) {
     $date = mysqli_real_escape_string($con, $_GET['date']);
-    
+
     // Debugging: Check received date
     error_log("Fetching slots for date: $date");
 
-    $query = "SELECT s_time, count, category 
+    $query = "SELECT s_ftime, s_ttime, count, category 
               FROM booking 
               WHERE s_date = '$date' 
               AND count > 0
-              ORDER BY s_time ASC";
+              AND category = 'Public'
+              ORDER BY s_ftime ASC";
     $result = mysqli_query($con, $query);
 
     if (!$result) {
@@ -24,8 +25,9 @@ if (isset($_GET['date'])) {
     $slots = [];
     while ($row = mysqli_fetch_assoc($result)) {
         $slots[] = [
-            's_time' => $row['s_time'],
-            'count' => (int)$row['count'],
+            's_ftime' => date('h:i A', strtotime($row['s_ftime'])),  // Format to 12-hour AM/PM
+            's_ttime' => date('h:i A', strtotime($row['s_ttime'])),  // Format to 12-hour AM/PM
+            'count' => (int) $row['count'],
             'category' => $row['category']
         ];
     }
@@ -39,4 +41,4 @@ if (isset($_GET['date'])) {
     http_response_code(400);
     echo json_encode(['error' => 'Date parameter is required']);
 }
-?> 
+?>

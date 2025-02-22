@@ -122,6 +122,7 @@ if (!isset($_SESSION['admin'])) {
                 <a href="createadmin.php" class="btn">Create Admin</a>
                 <button class="btn" id="refreshTable" onclick="resetTable()">Refresh Table</button>
             </div>
+            <a href="dashboard.php" class="btn">Dashboard</a>
             <div class="card">
 
 

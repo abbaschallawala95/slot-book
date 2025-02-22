@@ -34,7 +34,8 @@ ini_set('display_errors', 1);
 
 // Check if user is logged in
 if (!isset($_SESSION['userid'])) {
-    die("<script>alert('Please login to book a slot.');</script>");
+    echo "<script>alert('Please login to book a slot.');</script>";
+    header("Location:index.php");
 }
 
 $sessionID = $_SESSION['userid'];
@@ -43,7 +44,7 @@ $query = "SELECT `s_date` FROM `booking` GROUP BY `s_date` ORDER BY `s_date` ASC
 $dateQuery = mysqli_query($con, $query);
 $firstDate = '';
 
-$slotsQuery = "SELECT `s_date`, `s_time`, `count` FROM `booking`";
+$slotsQuery = "SELECT `s_date`, `s_ftime`, `s_ttime`,`count` FROM `booking`";
 $slotsResult = mysqli_query($con, $slotsQuery);
 $timeSlots = [];
 while ($row = mysqli_fetch_assoc($slotsResult)) {
@@ -66,21 +67,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 
-    // Format date and time
-    $selectedDate = date('Y-m-d', strtotime($_POST['date']));
-    $selectedTime = date('H:i:s', strtotime($_POST['time']));
-    $userID = $items['id']; // Get user ID from form data
+    // Split the time into from and to parts
+    $timeParts = explode('-', $_POST['time']);
+    if (count($timeParts) !== 2) {
+        http_response_code(400);
+        echo "Invalid time format.";
+        exit();
+    }
 
+    $selectedFromTime = trim($timeParts[0]); // First part is from time
+    $selectedToTime = trim($timeParts[1]);   // Second part is to time
+
+    // Format date and times
+    $selectedDate = date('Y-m-d', strtotime($_POST['date']));
+    $formattedFromTime = date('H:i A', strtotime($selectedFromTime)); // Only time (24-hour format)
+    $formattedToTime = date('H:i A', strtotime($selectedToTime));     // Only time (24-hour format)
+    $userID = $items['id'];
 
     // Debugging: Print the received data
-    // echo "Received Data - Date: $selectedDate, Time: $selectedTime, User ID: $userID<br>";
+    error_log("Selected Date: $selectedDate");
+    error_log("From Time: $selectedFromTime");
+    error_log("To Time: $selectedToTime");
+    error_log("User ID: $userID");
 
     $_SESSION['newid'] = $userID;
 
     // Check slot availability
     $slotQuery = "SELECT id, count, category FROM booking 
                  WHERE s_date = '$selectedDate' 
-                 AND s_time = '$selectedTime' 
+                 AND s_ftime = '$formattedFromTime' 
+                 AND s_ttime = '$formattedToTime' 
                  AND count > 0";
     $slotResult = mysqli_query($con, $slotQuery);
 
@@ -102,17 +118,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
         try {
-            $check = "SELECT * FROM `booked_slot` WHERE `user_id`='$userID'";
-            $checkResult = mysqli_query($con, $check);
+            $checkQuery = "SELECT * FROM booked_slot 
+                           WHERE user_id = '$userID' 
+                           AND s_date = '$selectedDate' 
+                           AND s_ftime = '$formattedFromTime' 
+                           AND s_ttime = '$formattedToTime'";
+            $checkResult = mysqli_query($con, $checkQuery);
             if (!$checkResult) {
                 throw new Exception('Check Query Failed: ' . mysqli_error($con));
             }
 
             if (mysqli_num_rows($checkResult) == 0) {
                 http_response_code(400);
-                // Insert booking with category
-                $insertQuery = "INSERT INTO booked_slot (s_date, s_time, user_id, category, sabil_no, hof_its, hof_name) 
-                               VALUES ('$selectedDate', '$selectedTime', '$userID', '$category','$sessionID','$items[its_no]','$items[name]')";
+                // Insert booking with category and slot_id
+                $insertQuery = "INSERT INTO booked_slot 
+                               (slot_id,s_date, s_ftime, s_ttime, user_id, category, sabil_no, hof_its, hof_name) 
+                               VALUES ('$slotID','$selectedDate', '$formattedFromTime', '$formattedToTime', 
+                                       '$userID', '$category','$sessionID','$items[its_no]','$items[name]')";
 
                 // Debugging: Print the insert query
 
@@ -286,13 +308,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <br>
                     <div class="timeselect">
                         <select class="form-select" id="time" name="time" aria-label="Select Your Slot Time">
+
                             <?php
                             $timeSlots = [];
-                            $slotsQuery = "SELECT s_time, count FROM booking WHERE s_date = '$firstDate'";
+                            $slotsQuery = "SELECT s_ftime, s_ttime, count FROM booking WHERE s_date = '$firstDate' AND category= 'Public'";
                             $slotsResult = mysqli_query($con, $slotsQuery);
                             while ($row = mysqli_fetch_assoc($slotsResult)) {
+                                echo $row['s_ftime'];
                                 if ($row['count'] > 0) {
-                                    echo '<option value="' . $row['s_time'] . '">' . $row['s_time'] . ' (Available: ' . $row['count'] . ')</option>';
+
+                                    echo '<option value="' . $row['s_ftime'] . '-' . $row['s_ttime'] . '">' . $row['s_ftime'] . '' . $row['s_ttime'] . ' (Available: ' . $row['count'] . ')</option>';
                                 }
                             }
                             ?>
@@ -334,8 +359,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     if (Array.isArray(data) && data.length > 0) {
                         data.forEach(slot => {
                             var option = document.createElement('option');
-                            option.value = slot.s_time;
-                            option.textContent = slot.s_time + ' (' + 'Public' + ' - Available: ' + slot.count + ')';
+                            option.value = slot.s_ftime + '-' + slot.s_ttime;
+                            option.textContent = slot.s_ftime + ' to ' + slot.s_ttime + 
+                                ' (' + slot.category + ' - Available: ' + slot.count + ')';
                             timeDropdown.appendChild(option);
                         });
                     } else {
@@ -343,6 +369,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         option.textContent = 'No available slots';
                         timeDropdown.appendChild(option);
                     }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    var option = document.createElement('option');
+                    option.textContent = 'Error loading slots';
+                    timeDropdown.appendChild(option);
                 });
         }
 

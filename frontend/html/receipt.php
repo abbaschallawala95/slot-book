@@ -12,26 +12,12 @@ if (isset($_POST['logout'])) {
     header("Location: index.php");
     exit();
 }
-
-
-
-
 if (!isset($_SESSION['userid'])) {
     header("Location: index.php");
     exit();
 }
-
-
-
-
-
-
-
 $newID = $_SESSION['newid'];
 $sabilID = $_SESSION['userid'];
-
-
-
 $user = "SELECT * FROM `users` WHERE `sabil_no`='$sabilID'";
 $result = mysqli_query($con, $user);
 
@@ -46,19 +32,6 @@ $result2 = mysqli_query($con, $slot);
 // Debugging: Check slot query result
 if (!$result2) {
     die("Slot Query Failed: " . mysqli_error($con));
-}
-
-
-
-if (isset($_POST['cancel'])) {
-    $cancel = "DELETE FROM `booked_slot` WHERE `user_id`='$newID'";
-    $cancelRes = mysqli_query($con, $cancel);
-    if (!$cancelRes) {
-        die("Slot Delete Failed: " . mysqli_error($con));
-    } else {
-        echo '<script>alert("Your slot has been deleted!!")</script>';
-    }
-
 }
 ?>
 
@@ -75,7 +48,11 @@ if (isset($_POST['cancel'])) {
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="../css/style.css">
 </head>
-
+<style>
+    .container-confirmation{
+        height:auto;
+    }
+</style>
 <body>
     <div class="main-confirmation">
         <div class="container-confirmation">
@@ -87,7 +64,7 @@ if (isset($_POST['cancel'])) {
                 <div class="row align-items-start">
                     <div class="col">
                         <?php
-                        if (mysqli_num_rows($result2) > 0 && mysqli_num_rows($result) > 0) {
+                        if (mysqli_num_rows($result) > 0) {
                             $item = mysqli_fetch_assoc($result);
 
                             ?>
@@ -108,26 +85,9 @@ if (isset($_POST['cancel'])) {
                     </div>
                 </div>
                 <br>
-                <hr>
-                <?php
-                $item2 = mysqli_fetch_assoc($result2);
-                ?>
-                <div class="selectslot-confirmation">
-                    <h4 class="text-center">Your Slot has been Selected Successfully</h4>
-                    <div class="text-center">
-
-                        <span id="date"><?= htmlspecialchars($item2['s_date']); ?></span>
-                    </div>
-                    <div class="text-center">
-                        <span
-                            id="time">
-                        <?= htmlspecialchars(date('H:i A',strtotime($item2['s_ftime'])));?> -
-                        <?= htmlspecialchars(date('H:i A',strtotime($item2['s_ttime'])));?>
-                        </span>
-                        <span
-                            id="time"> </span>
-                    </div>
-                </div>
+          
+               
+               
                 <hr>
                 <div class="userdue-confirmation">
                     <div>
@@ -163,25 +123,14 @@ if (isset($_POST['cancel'])) {
                     </div>
                     <br>
                     <div class="text-center">
-                        <p>Note: If you recently paid the Sabil / FMB dues then please Ignore This</p>
+                        <p>
+                        Kindly ensure all pending Sabil and FMB Dues are cleared before Vajebaat Takmin. You can visit our office for payment assistance.
+                        </p>
                     </div>
                 </div>
                 <hr>
                 <br>
                 <div class="actionbuttons text-center">
-                    <div>
-                        <button type="button" onclick="downloadSlotPass()" class="btn">Download Your Slot Pass</button>
-                    </div>
-                    <br>
-                    <form action="" method='post'>
-
-
-                        <div class="text-center" id="cancelSlotButtonContainer">
-                            <button type="submit" name='cancel' id="cancelSlotButton" class="btn text-center">Cancel
-                                Slot</button>
-                        </div>
-                    </form>
-                    <br>
                     <form method='post' onsubmit="clearStorage()">
                         <div class="logout">
                             <button type='submit' class='btn' name='logout'>Logout</button>
@@ -196,9 +145,7 @@ if (isset($_POST['cancel'])) {
 
 
                             ?>
-        <div class='alert alert-warning'>
-            <p>No booking found. Please book a slot first.</p>
-        </div>
+      
 
 
     <?php }
@@ -209,43 +156,7 @@ if (isset($_POST['cancel'])) {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="../js/bootstrap.bundle.min.js"></script>
     <script src="../js/js.js"></script>
-    <script>
-
-
-        const sabilDue = document.getElmentById('sabil_due').textContent;
-
-        if (sabilDue === 0) {
-            document.getElementById('sabil_due').style.color = 'green';
-        }
-
-        fetch('footer.html')
-            .then(response => response.text())
-            .then(data => document.getElementById('footer').innerHTML = data);
-
-        document.addEventListener('DOMContentLoaded', function () {
-            const userRole = localStorage.getItem('role');
-
-            if (userRole === 'admin') {
-                document.getElementById('cancelSlotButton').style.display = 'block';
-            } else {
-                document.getElementById('cancelSlotButton').style.display = 'none';
-            }
-        });
-
-        function downloadSlotPass() {
-            const element = document.querySelector('.container-confirmation');
-            html2canvas(element, { scale: 2 }).then(canvas => {
-                const link = document.createElement('a');
-                link.href = canvas.toDataURL('image/jpeg', 1.0);
-                link.download = 'Slot_Pass.jpg';
-                link.click();
-            });
-        }
-
-        function clearStorage() {
-            localStorage.clear();
-        }
-    </script>
+   
 </body>
 
 </html>

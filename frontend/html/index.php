@@ -6,7 +6,7 @@ if(isset($_POST["submit"])){
     $sabil = $_POST['sabilno'];
     $hofits = $_POST['hofits'];
 
-    $sql = "SELECT * FROM `users` WHERE `sabil_no`='$sabil' ";
+    $sql = "SELECT * FROM `slot` WHERE `sabil_no`='$sabil' AND `its_no`='$hofits'";
     $res = mysqli_query($con, $sql);
 
     if (!$res) {
@@ -29,7 +29,8 @@ if(isset($_POST["submit"])){
                 // Redirect to confirmation.php if already booked
                 $_SESSION['userid'] = $sabil;
                 $_SESSION['newid'] = $item['id'];
-                header("Location: confirmation.php");
+                header("Location: receipt.php");
+                // header("Location: confirmation.php");
                 exit();
             } else {
                 // Allow login and redirect to instructions.html

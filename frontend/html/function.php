@@ -55,7 +55,7 @@ function adminLogin($con, $itsNo, $password)
     $admin = "SELECT * FROM `admin` WHERE `its_no`='$itsNo' AND `status`= '0'";
     $query = mysqli_query($con, $admin);
     $data = mysqli_fetch_assoc($query);
-    echo 'before query' . $data['its_no'];
+
 
 
 
@@ -64,7 +64,6 @@ function adminLogin($con, $itsNo, $password)
 
 
 
-        echo 'after query' . $data['its_no'];
         if (password_verify($password, $data['password'])) {
 
 
@@ -74,6 +73,7 @@ function adminLogin($con, $itsNo, $password)
 
             if ($data['is_superadmin'] == '0') {
                 $_SESSION['admin'] = $data['its_no'];
+
                 header('Location: superadmin.php');
                 exit();
             } elseif ($data['is_superadmin'] == '1') {
@@ -85,10 +85,10 @@ function adminLogin($con, $itsNo, $password)
 
 
         } else {
-            echo "<div class='alert alert-alert'>Password is wrong</div>";
+            echo "<div class='alert alert-warning'>Password is wrong</div>";
         }
     } else {
-        echo 'Data not fount';
+        echo "<div class='alert alert-danger'>You are currently Inactive</div>";
     }
 }
 function adminCreation($con, $name, $itsNo, $mobile, $password, $superAdmin, $status)
